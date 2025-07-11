@@ -20,7 +20,14 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
       rel="stylesheet"
     />
+
+    <script src="
+https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js
+"></script>
+
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
   </head>
+
   <body>
     <div class="container">
       <div class="top-panel">
@@ -32,7 +39,7 @@
         </p>
         <br />
 
-        <div class="search-container">
+        <form class="search-form" id="search-form">
           <input
             class="input-field"
             type="text"
@@ -43,13 +50,14 @@
           <button class="button" id="search-cocktail-btn">SEARCH</button>
           <button class="button" id="ai-cocktail-btn">AI SEARCH</button>
           <button class="button" id="random-cocktail-btn">RANDOM</button>
-        </div>
+        </form>
       </div>
       <div class="bottom-panel" id="cocktail-details"></div>
     </div>
     <footer>
       <small>Coded by ▼ Nesli Parmaksizoglu</small>
     </footer>
+    <script src="src/config.js"></script>
     <script src="src/index.js"></script>
   </body>
 </html>
