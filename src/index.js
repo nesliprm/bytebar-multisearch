@@ -104,6 +104,12 @@ function showSearchCocktail(event) {
       }
     })
     .catch((error) => console.error("Error fetching cocktails:", error));
+
+  if (!ingredient.trim()) {
+    document.getElementById("cocktail-details").innerHTML =
+      "Please enter an ingredient.";
+    return;
+  }
 }
 
 // AI Search /////////////////////////////////////////////////////
