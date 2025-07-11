@@ -80,3 +80,5 @@ function showSearchCocktail() {
     })
     .catch((error) => console.error("Error fetching cocktails:", error));
 }
+
+// AI Search
