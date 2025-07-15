@@ -100,14 +100,14 @@ function showSearchCocktail(event) {
           );
       } else {
         document.getElementById("cocktail-details").innerHTML =
-          "No cocktails found.";
+          '<i class="fa-solid fa-triangle-exclamation"></i> No cocktails found.';
       }
     })
     .catch((error) => console.error("Error fetching cocktails:", error));
 
   if (!ingredient.trim()) {
     document.getElementById("cocktail-details").innerHTML =
-      "Please enter an ingredient.";
+      '<i class="fa-solid fa-triangle-exclamation"></i> Please enter an ingredient.';
     return;
   }
 }
@@ -125,12 +125,20 @@ function displayAiCocktail(response) {
 
 function generateAiCocktail(event) {
   event.preventDefault();
+
+  let userInput = document.querySelector("#ingredient-input").value.trim();
+  if (!userInput) {
+    document.getElementById("cocktail-details").innerHTML =
+      '<i class="fa-solid fa-triangle-exclamation"></i> Please enter an ingredient.';
+    showBottomPanel();
+    return;
+  }
+
   showBottomPanel();
   showTypewriterLoading();
 
-  let userInput = document.querySelector("#ingredient-input");
   let apiKey = API_KEY;
-  let prompt = `Create and display a logical cocktail recipe drinkable by humans that has ${userInput.value} as ingredients in it.`;
+  let prompt = `Create and display a logical cocktail recipe drinkable by humans that has ${userInput} as ingredients in it.`;
   let context =
     "You are an HTML generator for a cocktail app. Output only raw HTML and nothing else. Do NOT use <ul>, <li>, <p>, or any indentation. Instead, use this format exactly:\n<h1>Cocktail Name</h1><br><div>- ingredient 1<br>- ingredient 2<br>- ingredient 3<br></div><br><div>Instructions go here as plain text with no formatting tags.</div>\nDO NOT add images, styles, or extra tags. DO NOT use tabs or indentations.";
 
@@ -138,5 +146,23 @@ function generateAiCocktail(event) {
     prompt
   )}&context=${encodeURIComponent(context)}&key=${apiKey}`;
 
-  axios.get(apiURL).then(displayAiCocktail);
+  const timeout = setTimeout(() => {
+    document.getElementById("cocktail-details").innerHTML =
+      '<i class="fa-solid fa-triangle-exclamation"></i> This is taking too long... something might be wrong.';
+    showBottomPanel();
+  }, 8000);
+
+  axios
+    .get(apiURL)
+    .then((response) => {
+      clearTimeout(timeout);
+      displayAiCocktail(response);
+    })
+    .catch((error) => {
+      clearTimeout(timeout);
+      console.error("AI API error:", error);
+      document.getElementById("cocktail-details").innerHTML =
+        '<i class="fa-solid fa-triangle-exclamation"></i> Something went wrong with the AI cocktail. Please try again.';
+      showBottomPanel();
+    });
 }
