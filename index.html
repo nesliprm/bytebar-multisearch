@@ -3,8 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>byteBar v.2</title>
+    <meta
+      name="description"
+      content="A multi-search cocktail generator that uses ingredients of your choice!"
+    />
+    <title>byteBAR</title>
+    <link rel="icon" href="src/assets/favicon.png" />
     <link rel="stylesheet" href="src/styles.css" />
+    <script
+      src="https://kit.fontawesome.com/ea89842d86.js"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,16 +35,14 @@ https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js
 "></script>
 
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-    <script
-      src="https://kit.fontawesome.com/ea89842d86.js"
-      crossorigin="anonymous"
-    ></script>
   </head>
 
   <body>
     <div class="container">
       <div class="top-panel">
-        <h1 class="bytebar-header">byteBAR</h1>
+        <h1 class="bytebar-header">
+          <a href="/index.html" title="byteBar main">byteBAR</a>
+        </h1>
         <p>
           <strong
             >Welcome to byteBAR — a virtual mixologist that can craft
@@ -54,13 +61,25 @@ https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js
             placeholder="Type an ingredient"
           />
           <div class="button-group">
-            <button class="button" id="search-cocktail-btn">
+            <button
+              class="button"
+              id="search-cocktail-btn"
+              title="Search by ingredient"
+            >
               SEARCH <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-            <button class="button" id="ai-cocktail-btn">
+            <button
+              class="button"
+              id="ai-cocktail-btn"
+              title="Search by ingredient with AI"
+            >
               AI SEARCH <i class="fa-solid fa-robot"></i>
             </button>
-            <button class="button" id="random-cocktail-btn">
+            <button
+              class="button"
+              id="random-cocktail-btn"
+              title="Show a random cocktail (no ingredient needed)"
+            >
               RANDOM <i class="fa-solid fa-dice"></i>
             </button>
           </div>
