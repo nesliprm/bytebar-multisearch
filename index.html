@@ -26,6 +26,10 @@ https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js
 "></script>
 
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+    <script
+      src="https://kit.fontawesome.com/ea89842d86.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -33,9 +37,13 @@ https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js
       <div class="top-panel">
         <h1 class="bytebar-header">byteBAR</h1>
         <p>
-          Welcome to <strong>byteBAR</strong>, a virtual mixologist that can
-          craft cocktails! Click the 'Random' button below to discover a
-          surprise cocktail, or search for a cocktail by entering an ingredient.
+          Welcome to <strong>byteBAR</strong> — a virtual mixologist that can
+          craft cocktails!
+        </p>
+        <p>
+          Type an ingredient to search through IBA-certified cocktails, let our
+          boozy bot whip something up with AI Search, or click Random for a
+          surprise creation!
         </p>
         <br />
 
@@ -46,10 +54,17 @@ https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js
             id="ingredient-input"
             placeholder="Type an ingredient"
           />
-          <br />
-          <button class="button" id="search-cocktail-btn">SEARCH</button>
-          <button class="button" id="ai-cocktail-btn">AI SEARCH</button>
-          <button class="button" id="random-cocktail-btn">RANDOM</button>
+          <div class="button-group">
+            <button class="button" id="search-cocktail-btn">
+              SEARCH <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button class="button" id="ai-cocktail-btn">
+              AI SEARCH <i class="fa-solid fa-robot"></i>
+            </button>
+            <button class="button" id="random-cocktail-btn">
+              RANDOM <i class="fa-solid fa-dice"></i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="bottom-panel" id="cocktail-details"></div>
