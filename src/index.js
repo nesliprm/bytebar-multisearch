@@ -1,8 +1,11 @@
+isRandomSearch = false;
+
+// Display cocktail
 const displayCocktailDetails = (drink) => {
   const cocktailName = drink.strDrink;
   const instructions = drink.strInstructions;
 
-  // Create a list of ingredients and measurements
+  //// Create a list of ingredients and measurements
   let ingredients = "";
   for (let i = 1; i <= 15; i++) {
     const ingredient = drink[`strIngredient${i}`];
@@ -12,8 +15,17 @@ const displayCocktailDetails = (drink) => {
     }
   }
 
-  // Display the cocktail name, ingredients, and instructions
+  //// Conditional message in case of random search
+  let message = "";
+  if (isRandomSearch) {
+    message =
+      '<h3><i class="fa-solid fa-wand-magic-sparkles"></i> Your cocktail of the moment:</h3>';
+    isRandomSearch = false;
+  }
+
+  //// Display the cocktail name, ingredients, and instructions
   document.getElementById("cocktail-details").innerHTML = `
+        ${message}
         <h1>${cocktailName}</h1><br>
         <div>${ingredients}</div><br>
         <div>${instructions}</div>
@@ -53,6 +65,7 @@ document
 
 function showRandomCocktail(event) {
   event.preventDefault();
+  isRandomSearch = true;
   showBottomPanel();
   showTypewriterLoading();
 
@@ -150,26 +163,26 @@ function generateAiCocktail(event) {
     },
   ];
 
-  // Timeout function
+  //// Timeout function
   const timeout = setTimeout(() => {
     document.getElementById("cocktail-details").innerHTML =
       '<i class="fa-solid fa-triangle-exclamation"></i> This is taking too long... something might be wrong.';
     showBottomPanel();
   }, 8000);
 
-  // Weird input check for AI search
+  //// Weird input check for AI search
   const tooWeird =
     userInput.length > 3 &&
     !/[aeiou]/i.test(userInput) &&
     /^[a-zA-Z\s]+$/.test(userInput);
 
-  if (!tooWeird) {
+  if (tooWeird) {
     document.getElementById("cocktail-details").innerHTML =
       '<i class="fa-solid fa-comment-dots"></i> This doesn’t look like a typical ingredient, but let’s see what the AI comes up with...';
     showBottomPanel();
   }
 
-  // API call
+  //// API call
   axios
     .post(
       "https://api.openai.com/v1/chat/completions",
