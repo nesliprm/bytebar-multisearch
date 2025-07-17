@@ -149,8 +149,7 @@ function generateAiCocktail(event) {
   showBottomPanel();
   showTypewriterLoading();
 
-  let apiKey =
-    "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";
+  let apiKey = API_KEY;
 
   const messages = [
     {
