@@ -45,10 +45,8 @@ function showTypewriterLoading() {
     loop: true,
   });
 }
-// END Typewriter script reusable function
 
 // Random Cocktail Button
-
 document
   .getElementById("random-cocktail-btn")
   .addEventListener("click", showRandomCocktail);
@@ -67,26 +65,33 @@ function showRandomCocktail(event) {
     .catch((error) => console.error("Error fetching cocktail:", error));
 }
 
-// Search Cocktail by Ingredient
+// Search cocktail by ingredient
 document
   .getElementById("search-cocktail-btn")
   .addEventListener("click", showSearchCocktail);
+
 function showSearchCocktail(event) {
   event.preventDefault();
+
+  const ingredient = document.getElementById("ingredient-input").value;
+  if (!ingredient.trim()) {
+    document.getElementById("cocktail-details").innerHTML =
+      '<i class="fa-solid fa-triangle-exclamation"></i> Please enter an ingredient.';
+    return;
+  }
+
   showBottomPanel();
   showTypewriterLoading();
 
-  const ingredient = document.getElementById("ingredient-input").value;
   fetch(
     `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
   )
     .then((response) => response.json())
     .then((data) => {
-      if (data.drinks && data.drinks.length > 0) {
+      if (Array.isArray(data.drinks) && data.drinks.length > 0) {
         const randomIndex = Math.floor(Math.random() * data.drinks.length);
         const cocktailId = data.drinks[randomIndex].idDrink;
 
-        // Fetch cocktail details by ID
         fetch(
           `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailId}`
         )
@@ -100,16 +105,10 @@ function showSearchCocktail(event) {
           );
       } else {
         document.getElementById("cocktail-details").innerHTML =
-          '<i class="fa-solid fa-triangle-exclamation"></i> No cocktails found.';
+          '<i class="fa-solid fa-triangle-exclamation"></i> This doesn’t look like a real ingredient, please enter a valid one.';
       }
     })
     .catch((error) => console.error("Error fetching cocktails:", error));
-
-  if (!ingredient.trim()) {
-    document.getElementById("cocktail-details").innerHTML =
-      '<i class="fa-solid fa-triangle-exclamation"></i> Please enter an ingredient.';
-    return;
-  }
 }
 
 // AI Search /////////////////////////////////////////////////////
@@ -151,12 +150,26 @@ function generateAiCocktail(event) {
     },
   ];
 
+  // Timeout function
   const timeout = setTimeout(() => {
     document.getElementById("cocktail-details").innerHTML =
       '<i class="fa-solid fa-triangle-exclamation"></i> This is taking too long... something might be wrong.';
     showBottomPanel();
   }, 8000);
 
+  // Weird input check for AI search
+  const tooWeird =
+    userInput.length > 3 &&
+    !/[aeiou]/i.test(userInput) &&
+    /^[a-zA-Z\s]+$/.test(userInput);
+
+  if (!tooWeird) {
+    document.getElementById("cocktail-details").innerHTML =
+      '<i class="fa-solid fa-comment-dots"></i> This doesn’t look like a typical ingredient, but let’s see what the AI comes up with...';
+    showBottomPanel();
+  }
+
+  // API call
   axios
     .post(
       "https://api.openai.com/v1/chat/completions",
